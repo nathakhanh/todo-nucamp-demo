@@ -2,35 +2,38 @@ import React, { Component } from "react";
 
 export default class Todo extends Component {
   state = {
-    todo: [],
-    input: ""
+    text: "",
+    todos: []
   };
 
   componentDidMount() {
-    //Making to the server to grab todo
-    this.setState({ todo: ["default todo item"] });
+    //simulate fetching the data from database
+    setTimeout(() => {
+      this.setState({ todos: ["do laundry", "get a haircut"] });
+    }, 2000);
   }
 
-  handleInputChange = (e) => {
-    this.setState({ input: e.target.value });
+  handleTextChange = (e) => {
+    this.setState({ text: e.target.value });
   };
-
   handleAddItem = () => {
-    const newTodo = [...this.state.todo];
-    newTodo.push(this.state.input);
-    this.setState({ todo: newTodo });
+    const newTodos = [...this.state.todos];
+    newTodos.push(this.state.text);
+    this.setState({ todos: newTodos, text: "" });
   };
-
   render() {
-    const todo = this.state.todo.map((item) => {
-      return <li>{item}</li>;
+    const todos = this.state.todos.map((todo, index) => {
+      return <li key={index}>{todo}</li>;
     });
-
     return (
       <>
-        <div>My Todo List with Class Component</div>
-        <ul>{todo}</ul>
-        <input onChange={this.handleInputChange} />
+        <div>My Todo List:</div>
+        <ul>{todos}</ul>
+        <input
+          placeholder="Todo Item"
+          value={this.state.text}
+          onChange={this.handleTextChange}
+        />
         <button onClick={this.handleAddItem}>Add Item</button>
       </>
     );

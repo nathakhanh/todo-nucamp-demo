@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
 
 export default function TodoHooks() {
-  const [todo, setTodo] = useState([]);
-  const [input, setInput] = useState("");
+  const [text, setText] = useState("");
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    //Making to the server to grab todo
-    setTodo(["default todo item"]);
+    setTimeout(() => {
+      setTodos(["do laundry", "get a haircut"]);
+    }, 2000);
   }, []);
 
-  const handleInputChange = (e) => {
-    setInput(e.target.value);
-  };
-
-  const handleAddItem = () => {
-    const newTodo = [...todo];
-    newTodo.push(input);
-    setTodo(newTodo);
-  };
-
-  const todoList = todo.map((item) => {
-    return <li>{item}</li>;
+  const todoList = todos.map((todo, index) => {
+    return <li key={index}>{todo}</li>;
   });
 
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+  };
+  const handleAddItem = () => {
+    const newTodos = [...todos];
+    newTodos.push(text);
+    setTodos(newTodos);
+    setText("");
+  };
   return (
     <>
-      <div>My Todo List with Functional Component</div>
+      <div>My Todo List:</div>
       <ul>{todoList}</ul>
-      <input onChange={handleInputChange} />
+      <input placeholder="Todo Item" value={text} onChange={handleTextChange} />
       <button onClick={handleAddItem}>Add Item</button>
     </>
   );
