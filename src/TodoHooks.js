@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-export default function TodoHooks() {
-  const [text, setText] = useState("");
+function useTodoHooks() {
   const [todos, setTodos] = useState([]);
-
   useEffect(() => {
     setTimeout(() => {
-      setTodos(["do laundry", "get a haircut"]);
+      setTodos(["Go Running", "Study"]);
     }, 2000);
   }, []);
+  return [todos, setTodos];
+}
 
-  const todoList = todos.map((todo, index) => {
-    return <li key={index}>{todo}</li>;
-  });
+export default function TodoHooks() {
+  const [text, setText] = useState("");
+  const [todos, setTodos] = useTodoHooks();
 
-  const handleTextChange = (e) => {
+  const handleInputChange = (e) => {
     setText(e.target.value);
   };
   const handleAddItem = () => {
@@ -23,11 +23,19 @@ export default function TodoHooks() {
     setTodos(newTodos);
     setText("");
   };
+
+  const todoList = todos.map((todo) => {
+    return <li>{todo}</li>;
+  });
   return (
     <>
-      <div>My Todo List:</div>
+      <div>My Todo List with Hooks:</div>
       <ul>{todoList}</ul>
-      <input placeholder="Todo Item" value={text} onChange={handleTextChange} />
+      <input
+        placeholder="Todo item"
+        value={text}
+        onChange={handleInputChange}
+      />
       <button onClick={handleAddItem}>Add Item</button>
     </>
   );

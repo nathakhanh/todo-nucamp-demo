@@ -7,13 +7,13 @@ export default class Todo extends Component {
   };
 
   componentDidMount() {
-    //simulate fetching the data from database
+    //simulate fetching data from the DB
     setTimeout(() => {
-      this.setState({ todos: ["do laundry", "get a haircut"] });
+      this.setState({ todos: ["Do laundry", "Get a haircut"] });
     }, 2000);
   }
 
-  handleTextChange = (e) => {
+  handleInputChange = (e) => {
     this.setState({ text: e.target.value });
   };
   handleAddItem = () => {
@@ -22,17 +22,17 @@ export default class Todo extends Component {
     this.setState({ todos: newTodos, text: "" });
   };
   render() {
-    const todos = this.state.todos.map((todo, index) => {
-      return <li key={index}>{todo}</li>;
+    const todos = this.state.todos.map((todo) => {
+      return <li>{todo}</li>;
     });
     return (
       <>
         <div>My Todo List:</div>
         <ul>{todos}</ul>
         <input
-          placeholder="Todo Item"
+          placeholder="Todo item"
           value={this.state.text}
-          onChange={this.handleTextChange}
+          onChange={this.handleInputChange}
         />
         <button onClick={this.handleAddItem}>Add Item</button>
       </>
